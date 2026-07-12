@@ -10,6 +10,7 @@ const NORWEGIAN_ALPHABET = [
 ];
 
 const TILES_PER_ROUND = 6;
+const TOTAL_STEPS = 10;
 
 const gridEl = document.getElementById('letter-grid');
 const replayBtn = document.getElementById('replay-button');
@@ -18,13 +19,17 @@ const scoreEl = document.getElementById('score');
 const voiceWarningEl = document.getElementById('voice-warning');
 const voicePickerEl = document.getElementById('voice-picker');
 const voiceSelectEl = document.getElementById('voice-select');
+const bridgeEl = document.getElementById('bridge');
+const pandaEl = document.getElementById('panda');
+const victoryEl = document.getElementById('victory');
+const retryBtn = document.getElementById('retry-btn');
 
 const VOICE_STORAGE_KEY = 'agora.reading.voiceName';
 
 let currentTarget = null;
 let currentTiles = [];
 let acceptingInput = false;
-let score = 0;
+let progress = 0;
 let norwegianVoice = null;
 let availableVoices = [];
 
@@ -181,6 +186,28 @@ function speakLetter(letter) {
     speechSynthesis.speak(utterance);
 }
 
+function speakFeedback(text) {
+    if (!('speechSynthesis' in window)) return Promise.resolve();
+
+    speechSynthesis.cancel();
+
+    return new Promise(resolve => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'nb-NO';
+        utterance.rate = 1;
+        utterance.pitch = 1.1;
+        if (norwegianVoice) {
+            utterance.voice = norwegianVoice;
+        }
+        utterance.onend = () => resolve();
+        utterance.onerror = () => resolve();
+        speechSynthesis.speak(utterance);
+
+        // Safety fallback in case onend never fires (some browsers).
+        setTimeout(resolve, 3000);
+    });
+}
+
 /* ---------- Round logic ---------- */
 
 function pickRandom(arr, n, exclude = new Set()) {
@@ -244,22 +271,71 @@ function handleTileClick(tileEl, letter) {
         tileEl.classList.add('is-correct');
         feedbackEl.textContent = 'BRA! 🌟';
         feedbackEl.classList.add('is-correct');
-        score += 1;
-        scoreEl.textContent = String(score);
+        progress += 1;
+        scoreEl.textContent = String(progress);
+        stepPanda();
 
         // Disable the rest so they can't spam-click during transition.
         for (const t of gridEl.querySelectorAll('.letter-tile')) {
             if (t !== tileEl) t.disabled = true;
         }
 
-        setTimeout(newRound, 1100);
+        // Wait for "Riktig!" to finish speaking AND for the panda animation
+        // to visibly progress before moving on. Whichever takes longer wins.
+        const MIN_DELAY_MS = 900;
+        const start = Date.now();
+        speakFeedback('Riktig!').then(() => {
+            const elapsed = Date.now() - start;
+            const remaining = Math.max(0, MIN_DELAY_MS - elapsed);
+            setTimeout(() => {
+                if (progress >= TOTAL_STEPS) showVictory();
+                else newRound();
+            }, remaining);
+        });
     } else {
         tileEl.classList.add('is-wrong');
         feedbackEl.textContent = 'PRØV IGJEN';
         feedbackEl.classList.add('is-wrong');
+        speakFeedback('Feil');
         // Remove shake animation class after it finishes so it can replay.
         setTimeout(() => tileEl.classList.remove('is-wrong'), 500);
     }
+}
+
+/* ---------- Panda progress ---------- */
+
+function stepPanda() {
+    bridgeEl.style.setProperty('--progress', progress / TOTAL_STEPS);
+    // Retrigger the waddle animation.
+    pandaEl.classList.remove('is-walking');
+    // Force reflow so the animation restarts cleanly.
+    void pandaEl.offsetWidth;
+    pandaEl.classList.add('is-walking');
+}
+
+function resetPanda() {
+    progress = 0;
+    bridgeEl.style.setProperty('--progress', 0);
+    scoreEl.textContent = '0';
+}
+
+/* ---------- Victory ---------- */
+
+function showVictory() {
+    victoryEl.hidden = false;
+    // Move focus for accessibility / easy keyboard restart.
+    retryBtn.focus();
+}
+
+function hideVictory() {
+    victoryEl.hidden = true;
+}
+
+function restartGame() {
+    hideVictory();
+    resetPanda();
+    currentTarget = null;
+    newRound();
 }
 
 /* ---------- Wiring ---------- */
@@ -267,6 +343,8 @@ function handleTileClick(tileEl, letter) {
 replayBtn.addEventListener('click', () => {
     if (currentTarget) speakLetter(currentTarget);
 });
+
+retryBtn.addEventListener('click', restartGame);
 
 // Keyboard shortcut: pressing the matching letter also counts.
 document.addEventListener('keydown', event => {
