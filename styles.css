@@ -218,6 +218,29 @@ body > *:not(.canopy) {
     text-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
 }
 
+/* Completion badge (added by progress.js when the level was finished today) */
+.game-card {
+    position: relative;
+    overflow: visible;
+}
+
+.game-card__check {
+    position: absolute;
+    top: -0.85rem;
+    right: -0.85rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--moss-300);
+    text-shadow:
+        0 0 2px var(--moss-700),
+        0 3px 0 rgba(28, 44, 20, 0.45),
+        0 5px 10px rgba(28, 44, 20, 0.35);
+    transform: rotate(12deg);
+    pointer-events: none;
+}
+
 /* Category-tinted card variants */
 .category--reading .game-card {
     background: linear-gradient(160deg, #e07986, var(--berry));

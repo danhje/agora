@@ -324,6 +324,7 @@ function resetPanda() {
 
 function showVictory() {
     victoryEl.hidden = false;
+    if (window.AgoraProgress) window.AgoraProgress.markCompleted();
     // Move focus for accessibility / easy keyboard restart.
     retryBtn.focus();
 }

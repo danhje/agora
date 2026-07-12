@@ -501,6 +501,7 @@ function resetPanda() {
 
 function showVictory() {
     victoryEl.hidden = false;
+    if (window.AgoraProgress) window.AgoraProgress.markCompleted();
     retryBtn.focus();
 }
 
