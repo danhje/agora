@@ -1,0 +1,74 @@
+/* Styles for the <agora-bridge> custom element.
+ * Loaded inside the component's shadow root, so all selectors are
+ * scoped to the component and won't leak or be leaked into. */
+
+:host {
+    --progress: 0;
+    --panda-width: 68px;
+    --sag: 14px;                     /* how far the panda dips at midspan */
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    padding: 75px 4px 0;             /* leaves room for the panda above the scene */
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.wrap {
+    position: relative;
+    height: 50px;
+}
+
+.scene {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.goal {
+    position: absolute;
+    bottom: 26px;                    /* sit on top of the right grass mound */
+    left: 87%;
+    transform: translateX(-50%);
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    line-height: 1;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+    pointer-events: none;
+}
+
+/* Panda walking along the bridge. Horizontally interpolates between the
+ * two grass-mound peaks (at ~13% and ~87% of the scene width) and dips
+ * down through the sagging middle via a parabola: y = 4·sag·p·(1-p). */
+.panda {
+    position: absolute;
+    bottom: 24px;                    /* feet on top of the left grass mound at p=0 */
+    left: calc(13% + var(--progress) * 74% - var(--panda-width) / 2);
+    width: var(--panda-width);
+    transform: translateY(
+        calc(var(--sag) * 4 * var(--progress) * (1 - var(--progress)))
+    );
+    transition:
+        left 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+    pointer-events: none;
+}
+
+.panda svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.panda.is-walking svg {
+    animation: waddle 0.65s ease-in-out;
+}
+
+@keyframes waddle {
+    0%   { transform: translateY(0) rotate(0deg); }
+    25%  { transform: translateY(-8px) rotate(-5deg); }
+    50%  { transform: translateY(0) rotate(0deg); }
+    75%  { transform: translateY(-5px) rotate(5deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}

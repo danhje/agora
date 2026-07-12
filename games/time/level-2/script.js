@@ -39,7 +39,6 @@ const voiceWarningEl = document.getElementById('voice-warning');
 const voicePickerEl = document.getElementById('voice-picker');
 const voiceSelectEl = document.getElementById('voice-select');
 const bridgeEl = document.getElementById('bridge');
-const pandaEl = document.getElementById('panda');
 const victoryEl = document.getElementById('victory');
 const retryBtn = document.getElementById('retry-btn');
 
@@ -452,15 +451,13 @@ function handleTileClick(tileEl, time) {
 /* ---------- Panda progress ---------- */
 
 function stepPanda() {
-    bridgeEl.style.setProperty('--progress', progress / TOTAL_STEPS);
-    pandaEl.classList.remove('is-walking');
-    void pandaEl.offsetWidth;
-    pandaEl.classList.add('is-walking');
+    bridgeEl.progress = progress / TOTAL_STEPS;
+    bridgeEl.walk();
 }
 
 function resetPanda() {
     progress = 0;
-    bridgeEl.style.setProperty('--progress', 0);
+    bridgeEl.reset();
     scoreEl.textContent = '0';
 }
 
