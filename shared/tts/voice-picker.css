@@ -1,0 +1,70 @@
+/* Agora — <agora-voice-picker> styles.
+ *
+ * Loaded into the component's Shadow DOM. Keeps the look of the fixed
+ * bottom-right voice picker, and doubles as the "no Norwegian voice"
+ * warning badge when no nb/no voice is installed.
+ */
+
+:host {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 10;
+    font-family: var(--font-display, 'Fredoka', sans-serif);
+    color: var(--moss-700, #3d6b28);
+    max-width: min(280px, 70vw);
+}
+
+:host([hidden]) { display: none; }
+
+.picker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    border-radius: 999px;
+    box-shadow: var(--shadow-soft, 0 4px 10px rgba(45, 69, 32, 0.2));
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+select {
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--moss-800, #2d4520);
+    background: transparent;
+    border: none;
+    padding: 0.2rem 0.25rem;
+    border-radius: 999px;
+    cursor: pointer;
+    max-width: 180px;
+}
+
+select:focus-visible {
+    outline: 2px solid var(--sun, #f5c34b);
+    outline-offset: 2px;
+}
+
+.warning {
+    display: block;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px dashed var(--sun, #f5c34b);
+    border-radius: var(--radius-lg, 16px);
+    padding: 0.6rem 0.85rem;
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: var(--moss-700, #3d6b28);
+    box-shadow: var(--shadow-soft, 0 4px 10px rgba(45, 69, 32, 0.2));
+}

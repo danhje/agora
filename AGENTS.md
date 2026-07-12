@@ -20,7 +20,8 @@ Anything used by more than one game lives under `shared/`, organised **by featur
 shared/
   bridge/     bridge.css  bridge.js   ← <agora-bridge> custom element
   victory/    victory.css victory.js  ← <agora-victory> custom element
-  tts/        tts.js      voice-picker.css
+  tts/        tts.js      voice-picker.js  voice-picker.css
+                                       ← window.AgoraTTS + <agora-voice-picker>
   game-shell.css                       ← header, back button, score, prompt, feedback, replay button, voice warning
   progress.js                          ← window.AgoraProgress
 ```
@@ -30,7 +31,7 @@ Three tiers, matching how much behaviour a piece has:
 | Kind | Mechanism | Examples |
 |---|---|---|
 | Pure look, no state | Shared CSS file | `game-shell.css` |
-| Look + state + DOM | **Web Component** (`<agora-*>`, Shadow DOM) | `<agora-bridge>`, `<agora-victory>` |
+| Look + state + DOM | **Web Component** (`<agora-*>`, Shadow DOM) | `<agora-bridge>`, `<agora-victory>`, `<agora-voice-picker>` |
 | Behaviour/API only | JS module attached to `window.Agora*` | `AgoraProgress`, `AgoraTTS` |
 
 Conventions:
