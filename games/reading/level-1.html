@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AGORA — LESING NIVÅ 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="level-1.css" />
+</head>
+<body class="game-body">
+    <div class="canopy" aria-hidden="true"></div>
+
+    <header class="game-header">
+        <a href="../../index.html" class="back-button" aria-label="Tilbake til forsiden">
+            <span aria-hidden="true">←</span>
+            <span class="back-button__text">TILBAKE</span>
+        </a>
+        <h1 class="game-title">LESING · NIVÅ 1</h1>
+        <div class="score" aria-live="polite">
+            <span class="score__icon" aria-hidden="true">⭐</span>
+            <span class="score__value" id="score">0</span>
+        </div>
+    </header>
+
+    <main class="game-main">
+        <p class="prompt">TRYKK PÅ RIKTIG BOKSTAV</p>
+
+        <button
+            type="button"
+            class="replay-button"
+            id="replay-button"
+            aria-label="Hør bokstaven igjen"
+        >
+            <span class="replay-button__icon" aria-hidden="true">🔊</span>
+            <span class="replay-button__text">HØR IGJEN</span>
+        </button>
+
+        <label class="voice-picker" id="voice-picker" hidden>
+            <span class="voice-picker__label">STEMME</span>
+            <select
+                class="voice-picker__select"
+                id="voice-select"
+                aria-label="Velg stemme"
+            ></select>
+        </label>
+
+        <div
+            class="letter-grid"
+            id="letter-grid"
+            role="group"
+            aria-label="Velg bokstav"
+        ></div>
+
+        <p class="feedback" id="feedback" aria-live="polite"></p>
+
+        <p
+            class="voice-warning"
+            id="voice-warning"
+            hidden
+        >
+            🌱 Ingen norsk stemme funnet på denne enheten. Installer en norsk
+            (bokmål) TTS-stemme i systeminnstillingene for best opplevelse.
+        </p>
+    </main>
+
+    <script src="level-1.js" defer></script>
+</body>
+</html>
