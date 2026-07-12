@@ -171,7 +171,8 @@ function speakLetter(letter) {
     // Cancel anything currently queued so rapid clicks don't stack.
     speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(letter);
+    // Speak the lowercase form so voices don't announce it as "stor X" (capital X).
+    const utterance = new SpeechSynthesisUtterance(letter.toLowerCase());
     utterance.lang = 'nb-NO';
     utterance.rate = 0.85;
     utterance.pitch = 1.05;
