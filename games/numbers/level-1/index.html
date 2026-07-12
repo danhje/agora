@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AGORA — TALL NIVÅ 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../styles.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="game-body">
+    <div class="canopy" aria-hidden="true"></div>
+
+    <header class="game-header">
+        <a href="../../../index.html" class="back-button" aria-label="Tilbake til forsiden">
+            <span aria-hidden="true">←</span>
+            <span class="back-button__text">TILBAKE</span>
+        </a>
+        <h1 class="game-title">TALL · NIVÅ 1</h1>
+        <div class="score" aria-live="polite">
+            <span class="score__icon" aria-hidden="true">⭐</span>
+            <span class="score__value" id="score">0</span>
+            <span class="score__total" id="score-total">/10</span>
+        </div>
+    </header>
+
+    <main class="game-main">
+        <div class="bridge-progress" aria-hidden="true">
+            <div class="bridge" id="bridge">
+                <div class="panda" id="panda">
+                    <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Body -->
+                        <ellipse cx="50" cy="100" rx="28" ry="24" fill="#fff" stroke="#2a2a2a" stroke-width="2"/>
+                        <!-- Arms -->
+                        <ellipse cx="22" cy="95" rx="8" ry="13" fill="#2a2a2a"/>
+                        <ellipse cx="78" cy="95" rx="8" ry="13" fill="#2a2a2a"/>
+                        <!-- Legs -->
+                        <ellipse cx="38" cy="124" rx="9" ry="10" fill="#2a2a2a"/>
+                        <ellipse cx="62" cy="124" rx="9" ry="10" fill="#2a2a2a"/>
+                        <!-- Ears -->
+                        <circle cx="25" cy="24" r="10" fill="#2a2a2a"/>
+                        <circle cx="75" cy="24" r="10" fill="#2a2a2a"/>
+                        <!-- Head -->
+                        <circle cx="50" cy="46" r="28" fill="#fff" stroke="#2a2a2a" stroke-width="2"/>
+                        <!-- Eye patches -->
+                        <ellipse cx="38" cy="46" rx="6.5" ry="9" fill="#2a2a2a" transform="rotate(-12 38 46)"/>
+                        <ellipse cx="62" cy="46" rx="6.5" ry="9" fill="#2a2a2a" transform="rotate(12 62 46)"/>
+                        <!-- Eyes -->
+                        <circle cx="38" cy="47" r="2.2" fill="#fff"/>
+                        <circle cx="62" cy="47" r="2.2" fill="#fff"/>
+                        <!-- Nose -->
+                        <ellipse cx="50" cy="55" rx="3" ry="2.2" fill="#2a2a2a"/>
+                        <!-- Mouth -->
+                        <path d="M 50 58 Q 46 62 43 60" fill="none" stroke="#2a2a2a" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M 50 58 Q 54 62 57 60" fill="none" stroke="#2a2a2a" stroke-width="1.8" stroke-linecap="round"/>
+                        <!-- Cheeks -->
+                        <circle cx="30" cy="56" r="3.5" fill="#f5b5c8" opacity="0.75"/>
+                        <circle cx="70" cy="56" r="3.5" fill="#f5b5c8" opacity="0.75"/>
+                        <!-- Pink bow on head -->
+                        <g transform="translate(50 14)">
+                            <path d="M 0 0 L -9 -6 L -9 6 Z" fill="#e83e8c"/>
+                            <path d="M 0 0 L 9 -6 L 9 6 Z" fill="#e83e8c"/>
+                            <circle cx="0" cy="0" r="2.8" fill="#c22672"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="bridge__goal" aria-hidden="true">🌳</div>
+            </div>
+        </div>
+
+        <p class="prompt">TRYKK PÅ RIKTIG TALL</p>
+
+        <button
+            type="button"
+            class="replay-button"
+            id="replay-button"
+            aria-label="Hør tallet igjen"
+        >
+            <span class="replay-button__icon" aria-hidden="true">🔊</span>
+            <span class="replay-button__text">HØR IGJEN</span>
+        </button>
+
+        <label class="voice-picker" id="voice-picker" hidden>
+            <span class="voice-picker__label">STEMME</span>
+            <select
+                class="voice-picker__select"
+                id="voice-select"
+                aria-label="Velg stemme"
+            ></select>
+        </label>
+
+        <div
+            class="number-grid"
+            id="number-grid"
+            role="group"
+            aria-label="Velg tall"
+        ></div>
+
+        <p class="feedback" id="feedback" aria-live="polite"></p>
+
+        <p
+            class="voice-warning"
+            id="voice-warning"
+            hidden
+        >
+            🌱 Ingen norsk stemme funnet på denne enheten. Installer en norsk
+            (bokmål) TTS-stemme i systeminnstillingene for best opplevelse.
+        </p>
+    </main>
+
+    <div class="victory" id="victory" hidden role="dialog" aria-modal="true" aria-labelledby="victory-title">
+        <div class="victory__card">
+            <div class="victory__star" aria-hidden="true">⭐</div>
+            <h2 id="victory-title">DU KLARTE DET!</h2>
+            <p>Pandaen kom seg trygt over brua! 🐼🌳</p>
+            <div class="victory__buttons">
+                <button type="button" class="victory__btn victory__btn--retry" id="retry-btn">
+                    <span aria-hidden="true">🔄</span>
+                    SPILL IGJEN
+                </button>
+                <a href="../../../index.html" class="victory__btn victory__btn--next" id="next-btn">
+                    <span aria-hidden="true">🏡</span>
+                    TIL HOVEDMENY
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
