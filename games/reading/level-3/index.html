@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AGORA — LESING NIVÅ 2</title>
+    <title>AGORA — LESING NIVÅ 3</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet" />
@@ -18,7 +18,7 @@
             <span aria-hidden="true">←</span>
             <span class="back-button__text">TILBAKE</span>
         </a>
-        <h1 class="game-title">LESING · NIVÅ 2</h1>
+        <h1 class="game-title">LESING · NIVÅ 3</h1>
         <div class="score" aria-live="polite">
             <span class="score__icon" aria-hidden="true">⭐</span>
             <span class="score__value" id="score">0</span>
@@ -70,13 +70,13 @@
             </div>
         </div>
 
-        <p class="prompt">TRYKK PÅ RIKTIG BOKSTAV</p>
+        <p class="prompt">TRYKK PÅ RIKTIG ORD</p>
 
         <button
             type="button"
             class="replay-button"
             id="replay-button"
-            aria-label="Hør bokstaven igjen"
+            aria-label="Hør ordet igjen"
         >
             <span class="replay-button__icon" aria-hidden="true">🔊</span>
             <span class="replay-button__text">HØR IGJEN</span>
@@ -92,10 +92,10 @@
         </label>
 
         <div
-            class="letter-grid"
-            id="letter-grid"
+            class="word-grid"
+            id="word-grid"
             role="group"
-            aria-label="Velg bokstav"
+            aria-label="Velg ord"
         ></div>
 
         <p class="feedback" id="feedback" aria-live="polite"></p>
@@ -120,9 +120,9 @@
                     <span aria-hidden="true">🔄</span>
                     SPILL IGJEN
                 </button>
-                <a href="../level-3/index.html" class="victory__btn victory__btn--next" id="next-btn">
-                    <span aria-hidden="true">➡️</span>
-                    NESTE SPILL
+                <a href="../../../index.html" class="victory__btn victory__btn--next" id="next-btn">
+                    <span aria-hidden="true">🏡</span>
+                    TIL HOVEDMENY
                 </a>
             </div>
         </div>
