@@ -17,6 +17,8 @@
 
 :host([hidden]) { display: none; }
 
+[hidden] { display: none !important; }
+
 .picker {
     display: inline-flex;
     align-items: center;

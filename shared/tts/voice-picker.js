@@ -56,6 +56,7 @@
             });
 
             this._onReady        = () => this._render();
+            this._onVoicesChanged = () => this._render();
             this._onVoiceChanged = () => this._syncSelected();
 
             const tts = window.AgoraTTS;
@@ -64,6 +65,7 @@
                 return;
             }
             tts.addEventListener('ready', this._onReady);
+            tts.addEventListener('voiceschanged', this._onVoicesChanged);
             tts.addEventListener('voicechanged', this._onVoiceChanged);
             // If the caller already initialised, render immediately;
             // otherwise kick off init so we're not dependent on ordering.
@@ -74,6 +76,7 @@
             const tts = window.AgoraTTS;
             if (!tts) return;
             tts.removeEventListener('ready', this._onReady);
+            tts.removeEventListener('voiceschanged', this._onVoicesChanged);
             tts.removeEventListener('voicechanged', this._onVoiceChanged);
         }
 
@@ -90,13 +93,6 @@
             }
 
             const norwegian = tts.getNorwegianVoices();
-            // Only show the dropdown if there's a meaningful choice.
-            if (norwegian.length <= 1) {
-                this._pickerEl.hidden = true;
-                this._warningEl.hidden = true;
-                return;
-            }
-
             this._selectEl.innerHTML = '';
             const current = tts.currentVoice;
             for (const voice of norwegian) {

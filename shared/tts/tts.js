@@ -5,7 +5,7 @@
  *     that never fire `voiceschanged`),
  *   - auto-picks a preferred Norwegian female voice,
  *   - remembers the user's choice across games via one localStorage key,
- *   - dispatches `ready`, `voicechanged`, `speakingstart`, `speakingend`
+ *   - dispatches `ready`, `voiceschanged`, `voicechanged`, `speakingstart`, `speakingend`
  *     events so UI (replay buttons, voice pickers) can react.
  *
  * Usage:
@@ -17,6 +17,7 @@
  *
  * Events fire on the AgoraTTS object itself (it's an EventTarget):
  *   - 'ready'          — voice list loaded (may fire even with 0 voices)
+ *   - 'voiceschanged'  — the browser's available voice list was updated
  *   - 'voicechanged'   — currentVoice was updated
  *   - 'speakingstart'  — detail: { feedback: boolean }
  *   - 'speakingend'    — detail: { feedback: boolean }
@@ -105,6 +106,28 @@
             this._currentVoice = null;
             this._initPromise = null;
             this._supported = 'speechSynthesis' in window;
+            this._onVoicesChanged = () => this._refreshVoices();
+            if (this._supported) {
+                speechSynthesis.addEventListener('voiceschanged', this._onVoicesChanged);
+            }
+        }
+
+        _refreshVoices() {
+            const voices = speechSynthesis.getVoices();
+            if (!voices.length) return;
+
+            const previous = this._voices.map(v => `${v.name}\n${v.lang}`).join('\n');
+            const next = voices.map(v => `${v.name}\n${v.lang}`).join('\n');
+            if (previous === next) return;
+
+            const currentName = this._currentVoice?.name;
+            const savedName = safeGetItem(STORAGE_KEY);
+            this._voices = voices;
+            this._currentVoice =
+                voices.find(v => v.name === currentName) ||
+                voices.find(v => v.name === savedName) ||
+                pickNorwegianVoice(voices);
+            this.dispatchEvent(new CustomEvent('voiceschanged'));
         }
 
         get supported() { return this._supported; }
