@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AGORA — TALL NIVÅ 4</title>
+    <title>AGORA — TALL NIVÅ 5</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet" />
@@ -18,7 +18,7 @@
             <span aria-hidden="true">←</span>
             <span class="back-button__text">TILBAKE</span>
         </a>
-        <h1 class="game-title">TALL · NIVÅ 4</h1>
+        <h1 class="game-title">TALL · NIVÅ 5</h1>
         <div class="score" aria-live="polite">
             <span class="score__icon" aria-hidden="true">⭐</span>
             <span class="score__value" id="score">0</span>
@@ -42,7 +42,7 @@
             class="number-grid"
             id="number-grid"
             role="group"
-            aria-label="Velg tall fra null til ti"
+            aria-label="Velg riktig tall"
         ></div>
 
         <p class="feedback" id="feedback" aria-live="polite"></p>
@@ -53,7 +53,9 @@
     <agora-victory
         id="victory"
         hidden
-        next-href="../level-5/index.html">
+        next-href="../../../index.html"
+        next-label="TIL HOVEDMENY"
+        next-icon="🏡">
     </agora-victory>
 
     <script src="../../../progress.js" defer></script>
