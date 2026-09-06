@@ -17,6 +17,7 @@ const WORDS = [
 ];
 
 const TILES_PER_ROUND = 6;
+const SAME_INITIAL_DISTRACTORS = 2;
 const TOTAL_STEPS = 10;
 
 const gridEl = document.getElementById('word-grid');
@@ -65,11 +66,21 @@ function newRound() {
     const [target] = pickRandom(WORDS, 1, excludeTarget);
     currentTarget = target;
 
-    const distractors = pickRandom(
-        WORDS,
-        TILES_PER_ROUND - 1,
-        new Set([target])
+    const sameInitialWords = WORDS.filter(
+        word => word !== target && word[0] === target[0]
     );
+    const sameInitialDistractors = pickRandom(
+        sameInitialWords,
+        SAME_INITIAL_DISTRACTORS
+    );
+    const distractors = [
+        ...sameInitialDistractors,
+        ...pickRandom(
+            WORDS,
+            TILES_PER_ROUND - 1 - sameInitialDistractors.length,
+            new Set([target, ...sameInitialDistractors])
+        )
+    ];
 
     currentTiles = [target, ...distractors];
     for (let i = currentTiles.length - 1; i > 0; i--) {
