@@ -21,7 +21,7 @@
  *   next-label  — button text (default: "NESTE SPILL")
  *   next-icon   — emoji shown before the label (default: "➡️")
  *   heading     — big headline text (default: "DU KLARTE DET!")
- *   message     — supporting text (default: "Pandaen kom seg trygt over brua! 🐼🌳")
+ *   message     — supporting text (default: "Pandaen kom seg trygt over broen! 🐼🌳")
  *
  * The retry button dispatches an `agora-retry` event and the component
  * automatically hides itself before the event fires — games only need to
@@ -31,7 +31,7 @@
     const CSS_URL = new URL('./victory.css', document.currentScript.src).href;
 
     const DEFAULT_HEADING  = 'DU KLARTE DET!';
-    const DEFAULT_MESSAGE  = 'Pandaen kom seg trygt over brua! 🐼🌳';
+    const DEFAULT_MESSAGE  = 'Pandaen kom seg trygt over broen! 🐼🌳';
     const DEFAULT_NEXT_LBL = 'NESTE SPILL';
     const DEFAULT_NEXT_ICO = '➡️';
 
@@ -104,7 +104,10 @@
             }
         }
 
-        show() { this.hidden = false; }
+        show() {
+            this.hidden = false;
+            window.AgoraTTS?.speak('Du klarte det! Pandan kom seg trygt over broen!');
+        }
         hide() { this.hidden = true;  }
 
         _syncContent() {
