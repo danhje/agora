@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AGORA — SKRIVING NIVÅ 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../styles.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="game-body">
+    <div class="canopy" aria-hidden="true"></div>
+
+    <header class="game-header">
+        <a href="../../../index.html" class="back-button" aria-label="Tilbake til forsiden">
+            <span aria-hidden="true">←</span>
+            <span class="back-button__text">TILBAKE</span>
+        </a>
+        <h1 class="game-title">SKRIVING · NIVÅ 1</h1>
+        <div class="score" aria-live="polite">
+            <span class="score__icon" aria-hidden="true">⭐</span>
+            <span class="score__value" id="score">0</span>
+            <span class="score__total">/10</span>
+        </div>
+    </header>
+
+    <main class="game-main">
+        <agora-bridge id="bridge"></agora-bridge>
+
+        <p class="prompt">SKRIV BOKSTAVEN PÅ TASTATURET</p>
+
+        <div class="letter-display" id="letter-display" aria-live="polite"></div>
+
+        <p class="feedback" id="feedback" aria-live="polite"></p>
+    </main>
+
+    <agora-victory
+        id="victory"
+        hidden
+        next-href="../../../index.html"
+        next-label="TIL HOVEDMENY"
+        next-icon="🏡">
+    </agora-victory>
+
+    <script src="../../../progress.js" defer></script>
+    <script src="../../../shared/bridge/bridge.js" defer></script>
+    <script src="../../../shared/victory/victory.js" defer></script>
+    <script src="../../../shared/tts/tts.js" defer></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
