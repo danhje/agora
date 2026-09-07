@@ -7,6 +7,7 @@
 
 const CHOICES_PER_ROUND = 3;
 const TOTAL_STEPS = 10;
+const OPPOSITE_QUARTER_CHANCE = 0.60;
 
 // Norwegian names for whole-hour readings. "Klokka er ett" uses the neuter
 // form "ett"; "halv ett", "kvart over ett" and "kvart på ett" do too.
@@ -71,6 +72,16 @@ AgoraTTS.addEventListener('speakingend', e => {
 
 function nextHour(h) {
     return h === 12 ? 1 : h + 1;
+}
+
+function previousHour(h) {
+    return h === 1 ? 12 : h - 1;
+}
+
+function oppositeQuarterForSameNamedHour(time) {
+    if (time.m === 15) return { h: previousHour(time.h), m: 45 };
+    if (time.m === 45) return { h: nextHour(time.h), m: 15 };
+    return null;
 }
 
 function timeToNorwegian(time) {
@@ -259,7 +270,11 @@ function pickRandomTime(exclude) {
 
 function pickDistractors(target, count) {
     const chosen = [target];
-    for (let i = 0; i < count; i++) {
+    const oppositeQuarter = oppositeQuarterForSameNamedHour(target);
+    if (oppositeQuarter && Math.random() < OPPOSITE_QUARTER_CHANCE) {
+        chosen.push(oppositeQuarter);
+    }
+    while (chosen.length <= count) {
         chosen.push(pickWeightedTime(chosen));
     }
     return chosen.slice(1);
