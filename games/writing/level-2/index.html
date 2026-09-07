@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AGORA — SKRIVING NIVÅ 1</title>
+    <title>AGORA — SKRIVING NIVÅ 2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet" />
@@ -18,7 +18,7 @@
             <span aria-hidden="true">←</span>
             <span class="back-button__text">TILBAKE</span>
         </a>
-        <h1 class="game-title">SKRIVING · NIVÅ 1</h1>
+        <h1 class="game-title">SKRIVING · NIVÅ 2</h1>
         <div class="score" aria-live="polite">
             <span class="score__icon" aria-hidden="true">⭐</span>
             <span class="score__value" id="score">0</span>
@@ -29,9 +29,17 @@
     <main class="game-main">
         <agora-bridge id="bridge"></agora-bridge>
 
-        <p class="prompt">SKRIV BOKSTAVEN PÅ TASTATURET</p>
+        <p class="prompt">SKRIV ORDET PÅ TASTATURET</p>
 
-        <div class="letter-display" id="letter-display" aria-live="polite"></div>
+        <div class="word-display" id="word-display" aria-label=""></div>
+
+        <div
+            class="word-input"
+            id="word-input"
+            role="status"
+            aria-live="polite"
+            aria-label="Skriv ordet">
+        </div>
 
         <p class="feedback" id="feedback" aria-live="polite"></p>
     </main>
@@ -39,9 +47,9 @@
     <agora-victory
         id="victory"
         hidden
-        next-href="../level-2/index.html"
-        next-label="NESTE SPILL"
-        next-icon="➡️">
+        next-href="../../../index.html"
+        next-label="TIL HOVEDMENY"
+        next-icon="🏡">
     </agora-victory>
 
     <script src="../../../progress.js" defer></script>
